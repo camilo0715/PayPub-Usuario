@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,800italic,400,700,800">
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+    <link type="text/css" rel="stylesheet" href="styles/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/animate.css">
+    <link type="text/css" rel="stylesheet" href="styles/all.css">
+    <link type="text/css" rel="stylesheet" href="styles/main.css">
+    <link type="text/css" rel="stylesheet" href="styles/style-responsive.css">
+</head>
+<body style="background: url('images/bg/bg.png') center center fixed; max-height:50%;">
+    <div class="page-form">
+        <div class="panel panel-blue">
+            <div class="panel-body pan">
+                <form action="#" id="forma" class="form-horizontal" name="forma">
+                    <div class="form-body pal">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <img src="images/avatar/profile-pic.png" class="img-responsive" style="margin-top: -55px;" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                               <input id="rut" name="rut" type="text" placeholder="RUT sin puntos" class="form-control" required/>
+                               <script>
+                                        function revisarDigito( dvr )
+                                        {   
+                                            dv = dvr + ""   
+                                            if ( dv != '0' && dv != '1' && dv != '2' && dv != '3' && dv != '4' && dv != '5' && dv != '6' && dv != '7' && dv != '8' && dv != '9' && dv != 'k'  && dv != 'K') 
+                                            {       
+                                                alert("Debe ingresar un digito verificador valido");        
+                                                window.document.forma.rut.focus();        
+                                                window.document.forma.rut.select();       
+                                                return false;   
+                                            }   
+                                            return true;
+                                        }
+
+                                        function revisarDigito2( crut )
+                                        {   
+                                            largo = crut.length;    
+                                            if ( largo < 2 )    
+                                            {       
+                                                alert("Debe ingresar el rut completo")      
+                                                window.document.forma.rut.focus();        
+                                                window.document.forma.rut.select();       
+                                                return false;   
+                                            }   
+                                            if ( largo > 2 )        
+                                                rut = crut.substring(0, largo - 1); 
+                                            else        
+                                                rut = crut.charAt(0);   
+                                            dv = crut.charAt(largo-1);  
+                                            revisarDigito( dv );    
+
+                                            if ( rut == null || dv == null )
+                                                return 0    
+
+                                            var dvr = '0'   
+                                            suma = 0    
+                                            mul  = 2    
+
+                                            for (i= rut.length -1 ; i >= 0; i--)    
+                                            {   
+                                                suma = suma + rut.charAt(i) * mul       
+                                                if (mul == 7)           
+                                                    mul = 2     
+                                                else                
+                                                    mul++   
+                                            }   
+                                            res = suma % 11 
+                                            if (res==1)     
+                                                dvr = 'k'   
+                                            else if (res==0)        
+                                                dvr = '0'   
+                                            else    
+                                            {       
+                                                dvi = 11-res        
+                                                dvr = dvi + ""  
+                                            }
+                                            if ( dvr != dv.toLowerCase() )  
+                                            {       
+                                                alert("EL rut es incorrecto")       
+                                                window.document.forma.rut.focus();        
+                                                window.document.forma.rut.select();       
+                                                return false    
+                                            }
+
+                                            return true
+                                        }
+
+                                        function Rut(texto)
+                                        {   
+                                            var tmpstr = "";    
+                                            for ( i=0; i < texto.length ; i++ )     
+                                                if ( texto.charAt(i) != ' ' && texto.charAt(i) != '.' && texto.charAt(i) != '-' )
+                                                    tmpstr = tmpstr + texto.charAt(i);  
+                                            texto = tmpstr; 
+                                            largo = texto.length;   
+
+                                            if ( largo < 2 )    
+                                            {       
+                                                alert("Debe ingresar el rut completo")      
+                                                window.document.forma.rut.focus();        
+                                                window.document.forma.rut.select();       
+                                                return false;   
+                                            }   
+
+                                            for (i=0; i < largo ; i++ ) 
+                                            {           
+                                                if ( texto.charAt(i) !="0" && texto.charAt(i) != "1" && texto.charAt(i) !="2" && texto.charAt(i) != "3" && texto.charAt(i) != "4" && texto.charAt(i) !="5" && texto.charAt(i) != "6" && texto.charAt(i) != "7" && texto.charAt(i) !="8" && texto.charAt(i) != "9" && texto.charAt(i) !="k" && texto.charAt(i) != "K" )
+                                                {           
+                                                    alert("El valor ingresado no corresponde a un R.U.T valido");           
+                                                    window.document.forma.rut.focus();            
+                                                    window.document.forma.rut.select();           
+                                                    return false;       
+                                                }   
+                                            }   
+
+                                            var invertido = ""; 
+                                            for ( i=(largo-1),j=0; i>=0; i--,j++ )      
+                                                invertido = invertido + texto.charAt(i);    
+                                            var dtexto = "";    
+                                            dtexto = dtexto + invertido.charAt(0);  
+                                            dtexto = dtexto + '-';  
+                                            cnt = 0;    
+
+                                            for ( i=1,j=2; i<largo; i++,j++ )   
+                                            {       
+                                                //alert("i=[" + i + "] j=[" + j +"]" );     
+                                                if ( cnt == 3 )     
+                                                {           
+                                                    dtexto = dtexto + '.';          
+                                                    j++;            
+                                                    dtexto = dtexto + invertido.charAt(i);          
+                                                    cnt = 1;        
+                                                }       
+                                                else        
+                                                {               
+                                                    dtexto = dtexto + invertido.charAt(i);          
+                                                    cnt++;      
+                                                }   
+                                            }   
+
+                                            invertido = ""; 
+                                            for ( i=(dtexto.length-1),j=0; i>=0; i--,j++ )      
+                                                invertido = invertido + dtexto.charAt(i);   
+
+                                            window.document.forma.rut.value = invertido.toUpperCase()     
+
+                                            if ( revisarDigito2(texto) )        
+                                                return true;    
+
+                                            return false;
+                                        }
+                                    </script>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                               <input id="nombre" name="nombre" type="text" placeholder="Nombres" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                               <input id="apellido" name="apellido" type="text" placeholder="Apellidos" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaNac" class="col-md-3 control-label">
+                                Fecha de Nacimiento</label>
+                            <div class="col-md-9">
+                               <input id="fechaNac" name="fechaNac" type="date" min="1947-12-31" max="1997-12-31" value="1997-04-11" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                               <input id="direccion" name="direccion" type="text" placeholder="Dirección" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                               <select  id="comuna" name="comuna" class="form-control" required>
+                                    <option value="" selected="selected">Comuna</option>
+                                    <option value="BATUCO" id="138">BATUCO</option>
+                                    <option value="BUIN" id="139">BUIN</option>
+                                    <option value="CAJON DEL MAIPO" id="141">CAJON DEL MAIPO</option>
+                                    <option value="CALERA DE TANGO" id="432">CALERA DE TANGO</option>
+                                    <option value="CERRILLOS" id="159">CERRILLOS</option>
+                                    <option value="CERRO NAVIA" id="159">CERRO NAVIA</option>
+                                    <option value="COLINA" id="142">COLINA</option>
+                                    <option value="CONCHALI" id="159">CONCHALI</option>
+                                    <option value="CURACAVI" id="143">CURACAVI</option>
+                                    <option value="EL BOSQUE" id="159">EL BOSQUE</option>
+                                    <option value="EL MONTE" id="144">EL MONTE</option>
+                                    <option value="ESTACION CENTRAL" id="159">ESTACION CENTRAL</option>
+                                    <option value="HOSPITAL" id="154">HOSPITAL</option>
+                                    <option value="HUECHURABA" id="159">HUECHURABA</option>
+                                    <option value="INDEPENDENCIA" id="159">INDEPENDENCIA</option>
+                                    <option value="ISLA DE MAIPO" id="145">ISLA DE MAIPO</option>
+                                    <option value="LA CISTERNA" id="159">LA CISTERNA</option>
+                                    <option value="LA FLORIDA" id="159">LA FLORIDA</option>
+                                    <option value="LA GRANJA" id="159">LA GRANJA</option>
+                                    <option value="LAMPA" id="146">LAMPA</option>
+                                    <option value="LA PINTANA" id="159">LA PINTANA</option>
+                                    <option value="LA REINA" id="159">LA REINA</option>
+                                    <option value="LAS CONDES" id="159">LAS CONDES</option>
+                                    <option value="LINDEROS" id="159">LINDEROS</option>
+                                    <option value="LO BARNECHEA" id="159">LO BARNECHEA</option>
+                                    <option value="BARNECHEA (EL COLORADO)" id="159">LO BARNECHEA (EL COLORADO)</option>
+                                    <option value="LO BARNECHEA (FARELLONES)" id="159">LO BARNECHEA (FARELLONES)</option>
+                                    <option value="LO BARNECHEA (LA DEHESA)" id="159">LO BARNECHEA (LA DEHESA)</option>
+                                    <option value="LO BARNECHEA (LA PARVA)" id="159">LO BARNECHEA (LA PARVA)</option>
+                                    <option value="LO BARNECHEA (VALLE NEVADO)" id="159">LO BARNECHEA (VALLE NEVADO)</option>
+                                    <option value="LO ESPEJO" id="159">LO ESPEJO</option>
+                                    <option value="LONQUEN" id="147">LONQUEN</option>
+                                    <option value="LO PRADO" id="159">LO PRADO</option>
+                                    <option value="MACUL" id="159">MACUL</option>
+                                    <option value="MAIPU" id="159">MAIPU</option>
+                                    <option value="MALLOCO" id="149">MALLOCO</option>
+                                    <option value="MARIA PINTO" id="150">MARIA PINTO</option>
+                                    <option value="MELIPILLA" id="151">MELIPILLA</option>
+                                    <option value="NOS" id="152">NOS</option>
+                                    <option value="ÑUÑOA" id="159">ÑUÑOA</option>
+                                    <option value="PADRE HURTADO" id="153">PADRE HURTADO</option>
+                                    <option value="PAINE" id="154">PAINE</option>
+                                    <option value="PEDRO AGUIRRE CERDA" id="159">PEDRO AGUIRRE CERDA</option>
+                                    <option value="PEÑAFLOR" id="155">PEÑAFLOR</option>
+                                    <option value="PEÑALOLEN" id="159">PEÑALOLEN</option>
+                                    <option value="PIRQUE" id="156">PIRQUE</option>
+                                    <option value="PROVIDENCIA" id="159">PROVIDENCIA</option>
+                                    <option value="PUDAHUEL" id="159">PUDAHUEL</option>
+                                    <option value="PUENTE ALTO" id="159">PUENTE ALTO</option>
+                                    <option value="QUILICURA" id="159">QUILICURA</option>
+                                    <option value="QUINTA NORMAL" id="159">QUINTA NORMAL</option>
+                                    <option value="RECOLETA" id="159">RECOLETA</option>
+                                    <option value="RENCA" id="159">RENCA</option>
+                                    <option value="SAN BERNARDO" id="158">SAN BERNARDO</option>
+                                    <option value="SAN JOAQUIN" id="159">SAN JOAQUIN</option>
+                                    <option value="SAN JOSE DE MAIPO" id="434">SAN JOSE DE MAIPO</option>
+                                    <option value="SAN MIGUEL" id="159">SAN MIGUEL</option>
+                                    <option value="SAN PEDRO" id="462">SAN PEDRO</option>
+                                    <option value="SAN RAMON" id="159">SAN RAMON</option>
+                                    <option value="SANTA ROSA DE CHENA" id="433">SANTA ROSA DE CHENA</option>
+                                    <option value="SANTIAGO CENTRO" id="159">SANTIAGO CENTRO</option>
+                                    <option value="TALAGANTE" id="161">TALAGANTE</option>
+                                    <option value="TIL-TIL" id="162">TIL-TIL</option>
+                                    <option value="VALDIVIA DE PAINE" id="163">VALDIVIA DE PAINE</option>
+                                    <option value="VITACURA" id="159">VITACURA</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                               <input id="ciudad" name="ciudad" type="text" placeholder="Ciudad" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                               <input id="fono" name="fono" type="number" placeholder="Fono" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                               <input id="correo" name="correo" type="email" placeholder="Correo" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                                <input id="pass01" name="pass" type="password" placeholder="Contraseña" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9">
+                                <input id="pass02" name="pass02" type="password" placeholder="Repita Contraseña" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="form-group mbn">
+                            <div class="col-lg-12" align="right">
+                                <div class="form-group mbn">
+                                    <div class="col-lg-3">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <a href="Login.html" class="btn btn-info">Volver</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="submit" class="btn btn-success">Completar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- the result of the search will be rendered inside this div -->
+            <div id="result"></div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+    // Attach a submit handler to the form
+    $("#forma").submit(function(event){
+        // Stop form from submitting normally
+        event.preventDefault();
+        var pistols = Rut(document.forma.rut.value);
+        if(pistols==true){
+            var passw        = $("#pass01").val();
+            var pass0        = $("#pass02").val();
+            if(passw==pass0){
+                // Get some values from elements on the page:
+                var rut         = $("#rut").val();
+                var nombre      = $("#nombre").val();
+                var apellido    = $("#apellido").val();
+                var fechaNac    = $("#fechaNac").val();
+                var direccion   = $("#direccion").val();
+                var comuna      = $("#comuna").val();
+                var ciudad      = $("#ciudad").val();
+                var fono        = $("#fono").val();
+                var correo      = $("#correo").val();
+                // Send the data using post
+                $.ajax({
+                url: 'http://www.tesisv2.netai.net/PayPub/data/middle.php',
+                type: 'POST',
+                data: {
+                    'token': rut,
+                    'hdnOperation': "hdnClRegistro",
+                    'rut': rut,
+                    'nombre': nombre,
+                    'apellido': apellido,
+                    'fechaNac': fechaNac,
+                    'direccion': direccion,
+                    'comuna': comuna,
+                    'ciudad': ciudad,
+                    'fono': fono,
+                    'correo': correo,
+                    'pass': passw
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var mensaje = data.Mensaje;
+                    if(mensaje=="Registro Exitoso"){
+                        alert(mensaje + "Ya puede iniciar sesion!");
+                        window.location.href = 'login.html';
+                    }
+                }
+            });
+            }else{
+                alert("Las contraseñas deben coincidir");
+            }
+        }
+    });
+    </script>
+</body>
+</html>
